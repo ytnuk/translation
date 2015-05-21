@@ -1,0 +1,28 @@
+presenter:
+	module: Translation
+	action:
+		add: Add translation
+		edit: Edit translation
+form:
+	container:
+		group: Translation
+		property:
+			key:
+				label: Key
+				placeholder: Fill key
+			translations:
+				group: Translations
+				action:
+					add: Add translation
+					delete: Delete translate
+translate:
+	form:
+		container:
+			group: Translate
+			property:
+				value:
+					label: Value
+					placeholder: Fill value
+				locale:
+					label: Locale
+					placeholder: Fill locale

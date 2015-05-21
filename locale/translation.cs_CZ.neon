@@ -1,0 +1,28 @@
+presenter:
+	module: Překlad
+	action:
+		add: Přidat překlad
+		edit: Upravit překlad
+form:
+	container:
+		group: Překlad
+		property:
+			key:
+				label: Klíč
+				placeholder: Vyplňte klíč
+			translations:
+				group: Překlady
+				action:
+					add: Přidat překlad
+					delete: Odebrat překlad
+translate:
+	form:
+		container:
+			group: Překlad
+			property:
+				value:
+					label: Hodnota
+					placeholder: Vyplňte hodnotu
+				locale:
+					label: Lokalizace
+					placeholder: Vyberte lokalizaci
