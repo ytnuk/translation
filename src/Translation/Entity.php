@@ -9,10 +9,6 @@ use Ytnuk;
 /**
  * @property string $key
  * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translations {1:m Ytnuk\Translation\Translate\Repository $translation primary}
- * TODO:
- * @property Nextras\Orm\Relationships\OneHasOneDirected|Ytnuk\Page\Entity|NULL $pageContent {1:1d Ytnuk\Page\Repository $content}
- * @property Nextras\Orm\Relationships\OneHasOneDirected|Ytnuk\Menu\Entity|NULL $menuTitle {1:1d Ytnuk\Menu\Repository $title}
- * @property Nextras\Orm\Relationships\OneHasOneDirected|Ytnuk\Web\Entity|NULL $webName {1:1d Ytnuk\Web\Repository $name}
  */
 class Entity extends Ytnuk\Orm\Entity
 {
