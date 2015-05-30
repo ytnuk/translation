@@ -31,7 +31,7 @@ final class Container extends Ytnuk\Orm\Form\Container
 	 */
 	protected function addPropertyTranslations(Nextras\Orm\Entity\Reflection\PropertyMetadata $property)
 	{
-		$translations = parent::addPropertyOneHasMany($property);
+		$translations = parent::addPropertyOneHasMany($property, 1);
 		if ($container = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE)) {
 			$translations->getCurrentGroup()->setOption('label', $container->formatPropertyLabel($container->getMetadata()->getProperty($this->getName())));
 		}

@@ -8,7 +8,7 @@ use Ytnuk;
 
 /**
  * @property string $key
- * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translations {1:m Ytnuk\Translation\Translate\Repository $translation primary}
+ * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translations {1:m Ytnuk\Translation\Translate\Repository $translation}
  */
 class Entity extends Ytnuk\Orm\Entity
 {
