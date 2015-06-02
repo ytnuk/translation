@@ -2,13 +2,13 @@
 
 namespace Ytnuk\Translation;
 
-use Nette;
 use Nextras;
 use Ytnuk;
+use Kdyby;
 
 /**
  * @property string $key
- * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translations {1:m Ytnuk\Translation\Translate\Repository $translation}
+ * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translations {1:m Ytnuk\Translation\Translate\Repository $translation} {container Translate\Entity\Container}
  */
 class Entity extends Ytnuk\Orm\Entity
 {
@@ -16,16 +16,24 @@ class Entity extends Ytnuk\Orm\Entity
 	const PROPERTY_NAME = 'key';
 
 	/**
-	 * @var Nette\Localization\ITranslator
+	 * @var Kdyby\Translation\Translator
 	 */
 	private $translator;
 
 	/**
-	 * @param Nette\Localization\ITranslator $translator
+	 * @param Kdyby\Translation\Translator $translator
 	 */
-	public function injectTranslator(Nette\Localization\ITranslator $translator)
+	public function injectTranslator(Kdyby\Translation\Translator $translator)
 	{
 		$this->translator = $translator;
+	}
+
+	/**
+	 * @return Kdyby\Translation\Translator
+	 */
+	public function getTranslator()
+	{
+		return $this->translator;
 	}
 
 	/**
@@ -33,14 +41,6 @@ class Entity extends Ytnuk\Orm\Entity
 	 */
 	public function __toString()
 	{
-		$translations = $this->translations->get();
-		$translate = NULL;
-		if (count($translations) && ! $translate = $translations->findBy(['this->locale->identifier' => $locale = $this->translator->getLocale()])->fetch()) {
-			if ($length = strpos($locale, '_')) {
-				$translate = $translations->findBy(['this->locale->identifier' => substr($locale, 0, $length)])->fetch();
-			}
-		}
-
-		return $translate === NULL ? $this->translator->translate(parent::__toString()) : (string) $translate;
+		return (string) ($this->translations->get()->fetch() ? : $this->translator->translate(parent::__toString()));
 	}
 }
