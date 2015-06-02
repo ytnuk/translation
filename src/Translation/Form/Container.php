@@ -20,7 +20,7 @@ final class Container extends Ytnuk\Orm\Form\Container
 	public function setValues($values, $erase = FALSE)
 	{
 		if ($container = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE)) {
-			$this->entity->setValue('key', $container->prefix($this->getName()));
+			$this->getEntity()->setValue('key', $container->prefix($this->getName()));
 		}
 
 		return parent::setValues($values, $erase);
