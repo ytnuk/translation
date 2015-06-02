@@ -53,17 +53,24 @@ final class Container extends Nextras\Orm\Relationships\OneHasMany
 		$collection = $collection->findBy(['this->locale->identifier!=' => NULL]);
 		$builder = $collection->getQueryBuilder();
 		foreach ($locales as $locale) {
-			$arguments = [
-				'query' => implode('=', [
-						'locale.identifier',
-						'%s'
-					]) . ' DESC',
-				'locale' => $locale,
+			$separator = strpos($locale, '_');
+			$subLocales = $separator === FALSE ? [$locale] : [
+				$locale,
+				substr($locale, 0, $separator)
 			];
-			call_user_func_array([
-				$builder,
-				'addOrderBy'
-			], $arguments);
+			foreach ($subLocales as $subLocale) {
+				$arguments = [
+					'query' => implode('=', [
+							'locale.identifier',
+							'%s'
+						]) . ' DESC',
+					'locale' => $subLocale,
+				];
+				call_user_func_array([
+					$builder,
+					'addOrderBy'
+				], $arguments);
+			}
 		}
 
 		return $collection;
