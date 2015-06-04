@@ -1,7 +1,5 @@
 presenter:
-	module: Translation
 	action:
-		add: Add translation
 		edit: Edit translation
 form:
 	container:
@@ -10,8 +8,8 @@ form:
 			key:
 				label: Key
 				placeholder: Fill key
-			translations:
-				group: Translations
+			translates:
+				group: Translates
 				action:
 					add: Add translation
 					delete: Delete translate

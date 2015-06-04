@@ -1,7 +1,5 @@
 presenter:
-	module: Překlad
 	action:
-		add: Přidat překlad
 		edit: Upravit překlad
 form:
 	container:
@@ -10,7 +8,7 @@ form:
 			key:
 				label: Klíč
 				placeholder: Vyplňte klíč
-			translations:
+			translates:
 				group: Překlady
 				action:
 					add: Přidat překlad

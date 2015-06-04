@@ -7,26 +7,18 @@ use Ytnuk;
 use Kdyby;
 
 /**
- * @property string $key
- * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translations {1:m Ytnuk\Translation\Translate\Repository $translation} {container Translate\Entity\Container}
+ * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translates {1:m Ytnuk\Translation\Translate\Repository $translation} {container Translate\Entity\Container}
+ * @property-read Ytnuk\Translation\Translate\Entity|NULL $translate {virtual}
  */
 class Entity extends Ytnuk\Orm\Entity
 {
 
-	const PROPERTY_NAME = 'key';
+	const PROPERTY_NAME = 'translate';
 
 	/**
 	 * @var Kdyby\Translation\Translator
 	 */
 	private $translator;
-
-	/**
-	 * @param Kdyby\Translation\Translator $translator
-	 */
-	public function injectTranslator(Kdyby\Translation\Translator $translator)
-	{
-		$this->translator = $translator;
-	}
 
 	/**
 	 * @return Kdyby\Translation\Translator
@@ -37,10 +29,18 @@ class Entity extends Ytnuk\Orm\Entity
 	}
 
 	/**
-	 * @inheritdoc
+	 * @param Kdyby\Translation\Translator $translator
 	 */
-	public function __toString()
+	public function injectTranslator(Kdyby\Translation\Translator $translator)
 	{
-		return (string) ($this->translations->get()->fetch() ? : $this->translator->translate(parent::__toString()));
+		$this->translator = $translator;
+	}
+
+	/**
+	 * @return Ytnuk\Translation\Translate\Entity|NULL
+	 */
+	public function getterTranslate()
+	{
+		return $this->translates->get()->fetch();
 	}
 }

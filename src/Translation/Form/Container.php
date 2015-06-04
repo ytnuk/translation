@@ -17,36 +17,16 @@ final class Container extends Ytnuk\Orm\Form\Container
 	/**
 	 * @inheritdoc
 	 */
-	public function setValues($values, $erase = FALSE)
+	protected function addPropertyTranslates(Nextras\Orm\Entity\Reflection\PropertyMetadata $property)
 	{
-		if ($container = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE)) {
-			$this->getEntity()->setValue('key', $container->prefix($this->getName()));
+		$translates = parent::addPropertyOneHasMany($property, 1);
+		if ($parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE)) {
+			$translates->getCurrentGroup()->setOption('label', $caption = $parent->formatPropertyLabel($parent->getMetadata()->getProperty($this->getName())));
+			foreach ($translates->containers as $container) {
+				$container['value']->caption = $caption;
+			}
 		}
 
-		return parent::setValues($values, $erase);
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	protected function addPropertyTranslations(Nextras\Orm\Entity\Reflection\PropertyMetadata $property)
-	{
-		$translations = parent::addPropertyOneHasMany($property, 1);
-		if ($container = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE)) {
-			$translations->getCurrentGroup()->setOption('label', $container->formatPropertyLabel($container->getMetadata()->getProperty($this->getName())));
-		}
-
-		return $translations;
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	protected function attached($form)
-	{
-		parent::attached($form);
-		if ($container = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE)) {
-			unset($this['key']);
-		}
+		return $translates;
 	}
 }
