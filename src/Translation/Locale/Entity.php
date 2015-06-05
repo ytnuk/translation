@@ -6,7 +6,7 @@ use Nextras;
 use Ytnuk;
 
 /**
- * @property string $identifier
+ * @property string $id
  * @property string $name
  * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translates {1:m Ytnuk\Translation\Translate\Repository $locale primary}
  */
