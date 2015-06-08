@@ -23,7 +23,7 @@ final class Mapper extends Ytnuk\Orm\Mapper
 	/**
 	 * @inheritdoc
 	 */
-	public function __construct(Nextras\Dbal\Connection $connection, Nette\Caching\IStorage $cacheStorage, Kdyby\Translation\Translator $translator = NULL)
+	public function __construct(Nextras\Dbal\Connection $connection, Nette\Caching\IStorage $cacheStorage, Kdyby\Translation\Translator $translator)
 	{
 		parent::__construct($connection, $cacheStorage);
 		$this->translator = $translator;
@@ -32,14 +32,12 @@ final class Mapper extends Ytnuk\Orm\Mapper
 	/**
 	 * @inheritdoc
 	 */
-	public function createCollectionOneHasMany(Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata, Nextras\Orm\Entity\IEntity $parent)
+	public function createCollection()
 	{
-		$collection = parent::createCollectionOneHasMany($metadata, $parent);
-
-		return $this->translator ? $this->sortCollectionByLocales($collection, [
+		return $this->sortCollectionByLocales(parent::createCollection(), [
 			$this->translator->getLocale(),
 			$this->translator->getDefaultLocale()
-		]) : $collection;
+		]);
 	}
 
 	/**
