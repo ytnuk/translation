@@ -38,4 +38,12 @@ final class Extension extends Nette\DI\CompilerExtension implements Ytnuk\Config
 			]
 		];
 	}
+
+	public function beforeCompile()
+	{
+		parent::beforeCompile();
+		$builder = $this->getContainerBuilder();
+		$translator = $builder->getDefinition($builder->getByType(Nette\Localization\ITranslator::class));
+		$translator->setClass(Translator::class, $translator->getFactory()->arguments);
+	}
 }

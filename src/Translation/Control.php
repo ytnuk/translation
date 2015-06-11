@@ -10,7 +10,7 @@ use Ytnuk;
  *
  * @package Ytnuk\Translation
  */
-final class Control extends Ytnuk\Application\Control
+final class Control extends Ytnuk\Orm\Control
 {
 
 	/**
@@ -47,6 +47,7 @@ final class Control extends Ytnuk\Application\Control
 	 */
 	public function __construct(Entity $translation, Repository $repository, Control\Factory $control, Form\Control\Factory $formControl, Ytnuk\Orm\Grid\Control\Factory $gridControl)
 	{
+		parent::__construct($translation);
 		$this->translation = $translation;
 		$this->repository = $repository;
 		$this->control = $control;
@@ -57,7 +58,7 @@ final class Control extends Ytnuk\Application\Control
 	/**
 	 * @return Form\Control
 	 */
-	protected function createComponentYtnukFormControl()
+	protected function createComponentYtnukOrmFormControl()
 	{
 		return $this->formControl->create($this->translation ? : new Entity);
 	}
