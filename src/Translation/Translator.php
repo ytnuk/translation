@@ -3,6 +3,7 @@
 namespace Ytnuk\Translation;
 
 use Kdyby;
+use Nextras;
 
 /**
  * Class Translator
@@ -11,6 +12,18 @@ use Kdyby;
  */
 final class Translator extends Kdyby\Translation\Translator
 {
+
+	/**
+	 * @inheritdoc
+	 */
+	public function translate($message, $count = NULL, $parameters = [], $domain = NULL, $locale = NULL)
+	{
+		if ($message instanceof Nextras\Orm\Entity\IEntity) {
+			return $message;
+		}
+
+		return parent::translate($message, $count, $parameters, $domain, $locale);
+	}
 
 	protected function assertValidLocale($locale)
 	{
