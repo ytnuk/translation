@@ -25,6 +25,9 @@ final class Translator extends Kdyby\Translation\Translator
 		return parent::translate($message, $count, $parameters, $domain, $locale);
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	protected function assertValidLocale($locale)
 	{
 	}

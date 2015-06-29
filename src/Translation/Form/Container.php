@@ -24,7 +24,7 @@ final class Container extends Ytnuk\Orm\Form\Container
 		$translates = parent::addPropertyOneHasMany($property, (int) ! $isNullable = $parentProperty && $parentProperty->relationshipType === Nextras\Orm\Entity\Reflection\PropertyMetadata::RELATIONSHIP_ONE_HAS_ONE_DIRECTED && $parentProperty->isNullable);
 		if ($parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE)) {
 			$translates->getCurrentGroup()->setOption('label', $caption = $parent->formatPropertyLabel($parent->getMetadata()->getProperty($this->getName())));
-			foreach ($translates->containers as $container) {
+			foreach ($translates->getContainers() as $container) {
 				$container['value']->caption = $caption;
 			}
 		}
