@@ -1,5 +1,4 @@
 <?php
-
 namespace Ytnuk\Translation\Control;
 
 use Ytnuk;

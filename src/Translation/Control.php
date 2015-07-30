@@ -1,5 +1,4 @@
 <?php
-
 namespace Ytnuk\Translation;
 
 use Nette;
@@ -10,7 +9,8 @@ use Ytnuk;
  *
  * @package Ytnuk\Translation
  */
-final class Control extends Ytnuk\Orm\Control
+final class Control
+	extends Ytnuk\Orm\Control
 {
 
 	/**
@@ -45,8 +45,13 @@ final class Control extends Ytnuk\Orm\Control
 	 * @param Form\Control\Factory $formControl
 	 * @param Ytnuk\Orm\Grid\Control\Factory $gridControl
 	 */
-	public function __construct(Entity $translation, Repository $repository, Control\Factory $control, Form\Control\Factory $formControl, Ytnuk\Orm\Grid\Control\Factory $gridControl)
-	{
+	public function __construct(
+		Entity $translation,
+		Repository $repository,
+		Control\Factory $control,
+		Form\Control\Factory $formControl,
+		Ytnuk\Orm\Grid\Control\Factory $gridControl
+	) {
 		parent::__construct($translation);
 		$this->translation = $translation;
 		$this->repository = $repository;

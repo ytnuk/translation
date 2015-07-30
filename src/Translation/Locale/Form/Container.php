@@ -1,5 +1,4 @@
 <?php
-
 namespace Ytnuk\Translation\Locale\Form;
 
 use Nette;
@@ -10,7 +9,8 @@ use Ytnuk;
  *
  * @package Ytnuk\Translation
  */
-final class Container extends Ytnuk\Orm\Form\Container
+final class Container
+	extends Ytnuk\Orm\Form\Container
 {
 
 }

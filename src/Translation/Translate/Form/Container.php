@@ -1,17 +1,17 @@
 <?php
-
 namespace Ytnuk\Translation\Translate\Form;
 
 use Nette;
-use Ytnuk;
 use Nextras;
+use Ytnuk;
 
 /**
  * Class Container
  *
  * @package Ytnuk\Translation
  */
-final class Container extends Ytnuk\Orm\Form\Container
+final class Container
+	extends Ytnuk\Orm\Form\Container
 {
 
 	/**
@@ -23,7 +23,10 @@ final class Container extends Ytnuk\Orm\Form\Container
 		switch ($metadata->name) {
 			case 'translation':
 			case 'locale':
-				$component->setOption('unique', TRUE);
+				$component->setOption(
+					'unique',
+					TRUE
+				);
 		}
 
 		return $component;

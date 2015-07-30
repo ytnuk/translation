@@ -1,18 +1,18 @@
 <?php
-
 namespace Ytnuk\Translation\Translate;
 
+use Kdyby;
 use Nette;
 use Nextras;
 use Ytnuk;
-use Kdyby;
 
 /**
  * Class Mapper
  *
  * @package Ytnuk\Translation
  */
-final class Mapper extends Ytnuk\Orm\Mapper
+final class Mapper
+	extends Ytnuk\Orm\Mapper
 {
 
 	/**
@@ -23,9 +23,15 @@ final class Mapper extends Ytnuk\Orm\Mapper
 	/**
 	 * @inheritdoc
 	 */
-	public function __construct(Nextras\Dbal\Connection $connection, Nette\Caching\IStorage $cacheStorage, Kdyby\Translation\Translator $translator)
-	{
-		parent::__construct($connection, $cacheStorage);
+	public function __construct(
+		Nextras\Dbal\Connection $connection,
+		Nette\Caching\IStorage $cacheStorage,
+		Kdyby\Translation\Translator $translator
+	) {
+		parent::__construct(
+			$connection,
+			$cacheStorage
+		);
 		$this->translator = $translator;
 	}
 
@@ -34,10 +40,13 @@ final class Mapper extends Ytnuk\Orm\Mapper
 	 */
 	public function createCollection()
 	{
-		return $this->sortCollectionByLocales(parent::createCollection(), [
-			$this->translator->getLocale(),
-			$this->translator->getDefaultLocale()
-		]);
+		return $this->sortCollectionByLocales(
+			parent::createCollection(),
+			[
+				$this->translator->getLocale(),
+				$this->translator->getDefaultLocale(),
+			]
+		);
 	}
 
 	/**
@@ -46,27 +55,46 @@ final class Mapper extends Ytnuk\Orm\Mapper
 	 *
 	 * @return Nextras\Orm\Mapper\Dbal\DbalCollection
 	 */
-	private function sortCollectionByLocales(Nextras\Orm\Mapper\Dbal\DbalCollection $collection, array $locales = [])
-	{
+	private function sortCollectionByLocales(
+		Nextras\Orm\Mapper\Dbal\DbalCollection $collection,
+		array $locales = []
+	) {
 		$builder = $collection->getQueryBuilder();
-		foreach ($locales as $locale) {
-			$separator = strpos($locale, '_');
+		foreach (
+			$locales as $locale
+		) {
+			$separator = strpos(
+				$locale,
+				'_'
+			);
 			$subLocales = $separator === FALSE ? [$locale] : [
 				$locale,
-				substr($locale, 0, $separator)
+				substr(
+					$locale,
+					0,
+					$separator
+				),
 			];
-			foreach ($subLocales as $subLocale) {
+			foreach (
+				$subLocales as $subLocale
+			) {
 				$arguments = [
-					'query' => implode('=', [
-							'locale_id',
-							'%s'
-						]) . ' DESC',
+					'query' => implode(
+							'=',
+							[
+								'locale_id',
+								'%s',
+							]
+						) . ' DESC',
 					'locale' => $subLocale,
 				];
-				call_user_func_array([
-					$builder,
-					'addOrderBy'
-				], $arguments);
+				call_user_func_array(
+					[
+						$builder,
+						'addOrderBy',
+					],
+					$arguments
+				);
 			}
 		}
 

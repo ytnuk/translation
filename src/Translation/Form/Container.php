@@ -1,17 +1,17 @@
 <?php
-
 namespace Ytnuk\Translation\Form;
 
 use Nette;
-use Ytnuk;
 use Nextras;
+use Ytnuk;
 
 /**
  * Class Container
  *
  * @package Ytnuk\Translation
  */
-final class Container extends Ytnuk\Orm\Form\Container
+final class Container
+	extends Ytnuk\Orm\Form\Container
 {
 
 	/**
@@ -19,19 +19,31 @@ final class Container extends Ytnuk\Orm\Form\Container
 	 */
 	protected function addPropertyTranslates(Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata)
 	{
-		$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
+		$parent = $this->lookupSelf(FALSE);
 		$parentProperty = $parent ? $parent->getMetadata()->getProperty($this->name) : NULL;
-		$translates = parent::addPropertyOneHasMany($metadata, (int) ! $isNullable = $parentProperty && $parentProperty->relationshipType === Nextras\Orm\Entity\Reflection\PropertyMetadata::RELATIONSHIP_ONE_HAS_ONE_DIRECTED && $parentProperty->isNullable);
-		if ($parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE)) {
-			$translates->getCurrentGroup()->setOption('label', $caption = $parent->formatPropertyLabel($parent->getMetadata()->getProperty($this->getName())));
-			foreach ($translates->getContainers() as $container) {
+		$translates = parent::addPropertyOneHasMany(
+			$metadata,
+			(int) ! $isNullable = $parentProperty && $parentProperty->relationship && $parentProperty->relationship->type === Nextras\Orm\Entity\Reflection\PropertyRelationshipMetadata::ONE_HAS_ONE_DIRECTED && $parentProperty->isNullable
+		);
+		if ($parent) {
+			$translates->getCurrentGroup()->setOption(
+				'label',
+				$caption = $parent->formatPropertyLabel($parent->getMetadata()->getProperty($this->getName()))
+			)
+			;
+			foreach (
+				$translates->getContainers() as $container
+			) {
 				$container['value']->caption = $caption;
 			}
 		}
 		if ($isNullable && $this->getForm()->isSubmitted()) {
-			$containers = array_filter($translates->getContainers()->getArrayCopy(), function ($container) {
-				return $container instanceof parent && ! $container['delete']->isSubmittedBy();
-			});
+			$containers = array_filter(
+				$translates->getContainers()->getArrayCopy(),
+				function ($container) {
+					return $container instanceof parent && ! $container['delete']->isSubmittedBy();
+				}
+			);
 			if ( ! $containers) {
 				$this->removeEntity();
 			}
