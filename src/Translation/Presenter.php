@@ -48,8 +48,7 @@ final class Presenter
 	 */
 	public function actionEdit($id)
 	{
-		$this->translation = $this->repository->getById($id);
-		if ( ! $this->translation) {
+		if ( ! $this->translation = $this->repository->getById($id)) {
 			$this->error();
 		}
 	}

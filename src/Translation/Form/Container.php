@@ -40,7 +40,12 @@ final class Container
 			$containers = array_filter(
 				$translates->getContainers()->getArrayCopy(),
 				function ($container) {
-					return $container instanceof parent && ! $container['delete']->isSubmittedBy();
+					$deleted = FALSE;
+					if (isset($container['delete'])) {
+						$deleted = $container['delete'] instanceof Nette\Forms\Controls\SubmitButton && $container['delete']->isSubmittedBy();
+					}
+
+					return $container instanceof parent && ! $deleted;
 				}
 			);
 			if ( ! $containers) {
