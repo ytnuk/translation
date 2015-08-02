@@ -29,8 +29,7 @@ final class Container
 			$translates->getCurrentGroup()->setOption(
 				'label',
 				$caption = $parent->formatPropertyLabel($parent->getMetadata()->getProperty($this->getName()))
-			)
-			;
+			);
 			foreach (
 				$translates->getContainers() as $container
 			) {
