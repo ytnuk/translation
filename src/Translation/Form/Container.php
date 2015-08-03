@@ -39,13 +39,8 @@ final class Container
 		if ($isNullable && $this->getForm()->isSubmitted()) {
 			$containers = array_filter(
 				$translates->getContainers()->getArrayCopy(),
-				function ($container) {
-					$deleted = FALSE;
-					if (isset($container['delete'])) {
-						$deleted = $container['delete'] instanceof Nette\Forms\Controls\SubmitButton && $container['delete']->isSubmittedBy();
-					}
-
-					return $container instanceof parent && ! $deleted;
+				function (Nette\ComponentModel\Component $component) {
+					return $component instanceof parent && ! (isset($component['delete']) && ($component['delete'] instanceof Nette\Forms\Controls\SubmitButton && $component['delete']->isSubmittedBy()));
 				}
 			);
 			if ( ! $containers) {

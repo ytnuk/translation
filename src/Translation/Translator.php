@@ -1,6 +1,7 @@
 <?php
 namespace Ytnuk\Translation;
 
+use InvalidArgumentException;
 use Kdyby;
 use Nextras;
 
@@ -18,6 +19,10 @@ final class Translator
 	 */
 	protected function assertValidLocale($locale)
 	{
+		try {
+			parent::assertValidLocale($locale);
+		} catch (InvalidArgumentException $ex) {
+		}
 	}
 
 	/**
