@@ -6,11 +6,6 @@ use Nette;
 use Nextras;
 use Ytnuk;
 
-/**
- * Class Mapper
- *
- * @package Ytnuk\Translation
- */
 final class Mapper
 	extends Ytnuk\Orm\Mapper
 {
@@ -20,9 +15,6 @@ final class Mapper
 	 */
 	private $translator;
 
-	/**
-	 * @inheritdoc
-	 */
 	public function __construct(
 		Nextras\Dbal\Connection $connection,
 		Nette\Caching\IStorage $cacheStorage,
@@ -35,10 +27,7 @@ final class Mapper
 		$this->translator = $translator;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function createCollection()
+	public function createCollection() : Nextras\Orm\Mapper\Dbal\DbalCollection
 	{
 		return $this->sortCollectionByLocales(
 			parent::createCollection(),
@@ -49,16 +38,11 @@ final class Mapper
 		);
 	}
 
-	/**
-	 * @param Nextras\Orm\Mapper\Dbal\DbalCollection $collection
-	 * @param array $locales
-	 *
-	 * @return Nextras\Orm\Mapper\Dbal\DbalCollection
-	 */
 	private function sortCollectionByLocales(
 		Nextras\Orm\Mapper\Dbal\DbalCollection $collection,
 		array $locales = []
-	) {
+	) : Nextras\Orm\Mapper\Dbal\DbalCollection
+	{
 		$builder = $collection->getQueryBuilder();
 		foreach (
 			$locales as $locale
@@ -78,22 +62,15 @@ final class Mapper
 			foreach (
 				$subLocales as $subLocale
 			) {
-				$arguments = [
-					'query' => implode(
-							'=',
-							[
-								'locale_id',
-								'%s',
-							]
-						) . ' DESC',
-					'locale' => $subLocale,
-				];
-				call_user_func_array(
-					[
-						$builder,
-						'addOrderBy',
-					],
-					$arguments
+				$builder->addOrderBy(
+					implode(
+						'=',
+						[
+							'locale_id',
+							'%s',
+						]
+					) . ' DESC',
+					$subLocale
 				);
 			}
 		}

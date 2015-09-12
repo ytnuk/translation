@@ -15,9 +15,6 @@ class Entity
 
 	const PROPERTY_NAME = 'translate';
 
-	/**
-	 * @return Ytnuk\Translation\Translate\Entity|NULL
-	 */
 	public function getterTranslate()
 	{
 		return $this->translates->get()->fetch();

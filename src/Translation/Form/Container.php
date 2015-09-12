@@ -5,18 +5,10 @@ use Nette;
 use Nextras;
 use Ytnuk;
 
-/**
- * Class Container
- *
- * @package Ytnuk\Translation
- */
 final class Container
 	extends Ytnuk\Orm\Form\Container
 {
 
-	/**
-	 * @inheritdoc
-	 */
 	protected function addPropertyTranslates(Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata)
 	{
 		$parent = $this->lookupSelf(FALSE);

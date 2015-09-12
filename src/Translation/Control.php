@@ -4,11 +4,6 @@ namespace Ytnuk\Translation;
 use Nette;
 use Ytnuk;
 
-/**
- * Class Control
- *
- * @package Ytnuk\Translation
- */
 final class Control
 	extends Ytnuk\Orm\Control
 {
@@ -38,13 +33,6 @@ final class Control
 	 */
 	private $gridControl;
 
-	/**
-	 * @param Entity $translation
-	 * @param Repository $repository
-	 * @param Control\Factory $control
-	 * @param Form\Control\Factory $formControl
-	 * @param Ytnuk\Orm\Grid\Control\Factory $gridControl
-	 */
 	public function __construct(
 		Entity $translation,
 		Repository $repository,
@@ -60,18 +48,12 @@ final class Control
 		$this->gridControl = $gridControl;
 	}
 
-	/**
-	 * @return Form\Control
-	 */
-	protected function createComponentYtnukOrmFormControl()
+	protected function createComponentYtnukOrmFormControl() : Form\Control
 	{
 		return $this->formControl->create($this->translation ? : new Entity);
 	}
 
-	/**
-	 * @return Ytnuk\Orm\Grid\Control
-	 */
-	protected function createComponentYtnukGridControl()
+	protected function createComponentYtnukGridControl() : Ytnuk\Orm\Grid\Control
 	{
 		return $this->gridControl->create($this->repository);
 	}

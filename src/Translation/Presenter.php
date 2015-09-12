@@ -4,11 +4,6 @@ namespace Ytnuk\Translation;
 use Nette;
 use Ytnuk;
 
-/**
- * Class Presenter
- *
- * @package Ytnuk\Translation
- */
 final class Presenter
 	extends Ytnuk\Web\Presenter
 {
@@ -28,10 +23,6 @@ final class Presenter
 	 */
 	private $translation;
 
-	/**
-	 * @param Repository $repository
-	 * @param Control\Factory $control
-	 */
 	public function __construct(
 		Repository $repository,
 		Control\Factory $control
@@ -41,12 +32,7 @@ final class Presenter
 		$this->control = $control;
 	}
 
-	/**
-	 * @param $id
-	 *
-	 * @throws Nette\Application\BadRequestException
-	 */
-	public function actionEdit($id)
+	public function actionEdit(int $id)
 	{
 		if ( ! $this->translation = $this->repository->getById($id)) {
 			$this->error();
@@ -58,10 +44,7 @@ final class Presenter
 		$this[Ytnuk\Web\Control::class][Ytnuk\Menu\Control::class][] = 'translation.presenter.action.edit';
 	}
 
-	/**
-	 * @return Control
-	 */
-	protected function createComponentYtnukTranslationControl()
+	protected function createComponentYtnukTranslationControl() : Control
 	{
 		return $this->control->create($this->translation ? : new Entity);
 	}
