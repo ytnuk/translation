@@ -37,4 +37,15 @@ final class Translator
 			$locale
 		);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function setLocale($locale)
+	{
+		if ($locale instanceof Locale\Entity) {
+			$locale = $locale->id;
+		}
+		parent::setLocale($locale);
+	}
 }
