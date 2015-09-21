@@ -50,7 +50,7 @@ final class Control
 
 	protected function createComponentYtnukOrmFormControl() : Form\Control
 	{
-		return $this->formControl->create($this->translation ? : new Entity);
+		return $this->formControl->create($this->translation);
 	}
 
 	protected function createComponentYtnukGridControl() : Ytnuk\Orm\Grid\Control
