@@ -7,7 +7,7 @@ use Ytnuk;
 /**
  * @property string $id
  * @property string $name
- * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translates {1:m Ytnuk\Translation\Translate\Entity::$locale order:translation primary}
+ * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translates {1:m Ytnuk\Translation\Translate\Entity::$locale, orderBy=translation, primary=true}
  */
 class Entity
 	extends Ytnuk\Orm\Entity
