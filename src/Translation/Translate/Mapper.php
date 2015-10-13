@@ -27,10 +27,10 @@ final class Mapper
 		$this->translator = $translator;
 	}
 
-	public function createCollection() : Nextras\Orm\Mapper\Dbal\DbalCollection
+	public function findAll() : Nextras\Orm\Mapper\Dbal\DbalCollection
 	{
 		return $this->sortCollectionByLocales(
-			parent::createCollection(),
+			parent::findAll(),
 			[
 				$this->translator->getLocale(),
 				$this->translator->getDefaultLocale(),
