@@ -17,6 +17,17 @@ final class Translator
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function setLocale($locale)
+	{
+		if ($locale instanceof Locale\Entity) {
+			$locale = $locale->id;
+		}
+		parent::setLocale($locale);
+	}
+
 	public function translate(
 		$message,
 		$count = NULL,
@@ -36,16 +47,5 @@ final class Translator
 			$domain,
 			$locale
 		);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function setLocale($locale)
-	{
-		if ($locale instanceof Locale\Entity) {
-			$locale = $locale->id;
-		}
-		parent::setLocale($locale);
 	}
 }
