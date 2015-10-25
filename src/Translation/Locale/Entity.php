@@ -5,7 +5,7 @@ use Nextras;
 use Ytnuk;
 
 /**
- * @property string $id
+ * @property string $id {primary}
  * @property string $name
  * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translates {1:m Ytnuk\Translation\Translate\Entity::$locale, orderBy=translation, primary=true}
  */
