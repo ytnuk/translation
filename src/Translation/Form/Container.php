@@ -15,7 +15,7 @@ final class Container
 		$parentProperty = $parent ? $parent->getMetadata()->getProperty($this->name) : NULL;
 		$translates = parent::addPropertyOneHasMany(
 			$metadata,
-			(int) ! $isNullable = $parentProperty && $parentProperty->relationship && $parentProperty->relationship->type === Nextras\Orm\Entity\Reflection\PropertyRelationshipMetadata::ONE_HAS_ONE_DIRECTED && $parentProperty->isNullable
+			(int) ! $isNullable = $parentProperty && $parentProperty->relationship && $parentProperty->relationship->type === Nextras\Orm\Entity\Reflection\PropertyRelationshipMetadata::ONE_HAS_ONE && $parentProperty->isNullable
 		);
 		if ($parent) {
 			$translates->getCurrentGroup()->setOption(
