@@ -32,7 +32,9 @@ final class Container
 			$containers = array_filter(
 				$translates->getContainers()->getArrayCopy(),
 				function (Nette\ComponentModel\Component $component) {
-					return $component instanceof parent && ! (isset($component['delete']) && ($component['delete'] instanceof Nette\Forms\Controls\SubmitButton && $component['delete']->isSubmittedBy()));
+					$delete = $component['delete'] ?? NULL;
+
+					return $component instanceof parent && ! ($delete instanceof Nette\Forms\Controls\SubmitButton && $delete->isSubmittedBy());
 				}
 			);
 			if ( ! $containers) {

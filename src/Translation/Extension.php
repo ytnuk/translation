@@ -10,23 +10,6 @@ final class Extension
 	implements Ytnuk\Orm\Provider, Kdyby\Translation\DI\ITranslationProvider
 {
 
-	public function setCompiler(
-		Nette\DI\Compiler $compiler,
-		$name
-	) : self
-	{
-		$extension = parent::setCompiler(
-			$compiler,
-			$name
-		);
-		$compiler->addExtension(
-			'kdyby.translation',
-			new Kdyby\Translation\DI\TranslationExtension
-		);
-
-		return $extension;
-	}
-
 	public function getTranslationResources() : array
 	{
 		return [
@@ -45,14 +28,6 @@ final class Extension
 		];
 	}
 
-	public function loadConfiguration()
-	{
-		parent::loadConfiguration();
-		$builder = $this->getContainerBuilder();
-		$builder->addDefinition($this->prefix('control'))->setImplement(Control\Factory::class);
-		$builder->addDefinition($this->prefix('form.control'))->setImplement(Form\Control\Factory::class);
-	}
-
 	public function beforeCompile()
 	{
 		parent::beforeCompile();
@@ -62,5 +37,30 @@ final class Extension
 			Translator::class,
 			$translator->getFactory()->arguments
 		);
+	}
+
+	public function loadConfiguration()
+	{
+		parent::loadConfiguration();
+		$builder = $this->getContainerBuilder();
+		$builder->addDefinition($this->prefix('control'))->setImplement(Control\Factory::class);
+		$builder->addDefinition($this->prefix('form.control'))->setImplement(Form\Control\Factory::class);
+	}
+
+	public function setCompiler(
+		Nette\DI\Compiler $compiler,
+		$name
+	) : self
+	{
+		$extension = parent::setCompiler(
+			$compiler,
+			$name
+		);
+		$compiler->addExtension(
+			'kdyby.translation',
+			new Kdyby\Translation\DI\TranslationExtension
+		);
+
+		return $extension;
 	}
 }
