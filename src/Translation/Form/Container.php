@@ -11,8 +11,11 @@ final class Container
 
 	protected function addPropertyTranslates(Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata)
 	{
-		$parent = $this->lookupSelf(FALSE);
-		$parentProperty = $parent ? $parent->getMetadata()->getProperty($this->name) : NULL;
+		$parent = $this->lookup(
+			Ytnuk\Orm\Form\Container::class,
+			FALSE
+		);
+		$parentProperty = $parent instanceof Ytnuk\Orm\Form\Container ? $parent->getMetadata()->getProperty($this->name) : NULL;
 		$translates = parent::addPropertyOneHasMany(
 			$metadata,
 			(int) ! $isNullable = $parentProperty && $parentProperty->relationship && $parentProperty->relationship->type === Nextras\Orm\Entity\Reflection\PropertyRelationshipMetadata::ONE_HAS_ONE && $parentProperty->isNullable
