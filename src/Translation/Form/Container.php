@@ -33,7 +33,7 @@ final class Container
 		}
 		if ($isNullable && $this->getForm()->isSubmitted()) {
 			$containers = array_filter(
-				$translates->getContainers()->getArrayCopy(),
+				iterator_to_array($translates->getContainers()),
 				function (Nette\ComponentModel\Component $component) {
 					$delete = $component['delete'] ?? NULL;
 
