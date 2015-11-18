@@ -52,15 +52,14 @@ final class Extension
 		$name
 	) : self
 	{
-		$extension = parent::setCompiler(
-			$compiler,
-			$name
-		);
 		$compiler->addExtension(
 			'kdyby.translation',
 			new Kdyby\Translation\DI\TranslationExtension
 		);
 
-		return $extension;
+		return parent::setCompiler(
+			$compiler,
+			$name
+		);
 	}
 }
