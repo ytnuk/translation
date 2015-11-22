@@ -9,7 +9,7 @@ use Ytnuk;
  * @property string $name
  * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translates {1:m Ytnuk\Translation\Translate\Entity::$locale, orderBy=translation, primary=true}
  */
-class Entity
+final class Entity
 	extends Ytnuk\Orm\Entity
 {
 

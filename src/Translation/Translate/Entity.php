@@ -10,7 +10,7 @@ use Ytnuk;
  * @property Nextras\Orm\Relationships\ManyHasOne|Ytnuk\Translation\Entity $translation {m:1 Ytnuk\Translation\Entity::$translates}
  * @property Nextras\Orm\Relationships\ManyHasOne|Ytnuk\Translation\Locale\Entity $locale {m:1 Ytnuk\Translation\Locale\Entity::$translates}
  */
-class Entity
+final class Entity
 	extends Ytnuk\Orm\Entity
 {
 
