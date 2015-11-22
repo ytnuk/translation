@@ -2,8 +2,8 @@
 	"name": "ytnuk/translation",
 	"extra": {
 		"extensions": {
-			"ytnuk_translation": "Ytnuk\\Translation\\Extension",
-			"kdyby_translation": "Kdyby\\Translation\\DI\\TranslationExtension"
+			"ytnuk.translation": "Ytnuk\\Translation\\Extension",
+			"kdyby.translation": "Kdyby\\Translation\\DI\\TranslationExtension"
 		}
 	},
 	"require": {
