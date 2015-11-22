@@ -46,20 +46,4 @@ final class Extension
 		$builder->addDefinition($this->prefix('control'))->setImplement(Control\Factory::class);
 		$builder->addDefinition($this->prefix('form.control'))->setImplement(Form\Control\Factory::class);
 	}
-
-	public function setCompiler(
-		Nette\DI\Compiler $compiler,
-		$name
-	) : self
-	{
-		$compiler->addExtension(
-			'kdyby.translation',
-			new Kdyby\Translation\DI\TranslationExtension
-		);
-
-		return parent::setCompiler(
-			$compiler,
-			$name
-		);
-	}
 }

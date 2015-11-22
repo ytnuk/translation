@@ -1,5 +1,11 @@
 {
 	"name": "ytnuk/translation",
+	"extra": {
+		"extensions": {
+			"ytnuk/translation": "Ytnuk\\Translation\\Extension",
+			"kdyby/translation": "Kdyby\\Translation\\DI\\TranslationExtension"
+		}
+	},
 	"require": {
 		"ytnuk/application": "dev-master",
 		"kdyby/translation": "dev-master",
