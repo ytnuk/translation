@@ -10,8 +10,8 @@
 		}
 	},
 	"require": {
-		"ytnuk/application": "dev-master",
 		"kdyby/translation": "dev-master",
+		"ytnuk/application": "dev-master",
 		"ytnuk/orm": "dev-master",
 		"ytnuk/form": "dev-master"
 	},
