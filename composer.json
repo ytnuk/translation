@@ -4,6 +4,9 @@
 		"extensions": {
 			"ytnuk.translation": "Ytnuk\\Translation\\Extension",
 			"kdyby.translation": "Kdyby\\Translation\\DI\\TranslationExtension"
+		},
+		"kdyby.translation": {
+			"default": "🇺🇸"
 		}
 	},
 	"require": {
