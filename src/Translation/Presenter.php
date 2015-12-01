@@ -41,7 +41,7 @@ final class Presenter
 
 	public function renderEdit()
 	{
-		$this[Ytnuk\Web\Control::NAME][Ytnuk\Menu\Control::NAME][] = 'translation.presenter.action.edit';
+		$this['web-menu'][] = 'translation.presenter.action.edit';
 	}
 
 	protected function createComponentTranslation() : Control

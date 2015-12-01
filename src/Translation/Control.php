@@ -8,8 +8,6 @@ final class Control
 	extends Ytnuk\Orm\Control
 {
 
-	const NAME = 'translation';
-
 	/**
 	 * @var Entity
 	 */
