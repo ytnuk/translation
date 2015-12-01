@@ -34,10 +34,10 @@ final class Container
 		if ($isNullable && $this->getForm()->isSubmitted()) {
 			$containers = array_filter(
 				iterator_to_array($translates->getContainers()),
-				function (Nette\ComponentModel\Component $component) {
-					$delete = $component['delete'] ?? NULL;
+				function (Nette\Forms\Container $container) {
+					$delete = $container['delete'] ?? NULL;
 
-					return $component instanceof parent && ! ($delete instanceof Nette\Forms\Controls\SubmitButton && $delete->isSubmittedBy());
+					return ! $delete instanceof Nette\Forms\Controls\SubmitButton || ! $delete->isSubmittedBy();
 				}
 			);
 			if ( ! $containers) {

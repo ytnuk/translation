@@ -7,7 +7,7 @@ use Ytnuk;
 
 /**
  * @property int $id {primary}
- * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translates {1:m Ytnuk\Translation\Translate\Entity::$translation}
+ * @property Nextras\Orm\Relationships\OneHasMany|Ytnuk\Translation\Translate\Entity[] $translates {1:m Ytnuk\Translation\Translate\Entity::$translation, cascade=[persist, remove]}
  * @property-read Ytnuk\Translation\Translate\Entity|NULL $translate {virtual}
  */
 final class Entity
