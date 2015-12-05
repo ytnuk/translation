@@ -19,11 +19,6 @@ final class Control
 	private $repository;
 
 	/**
-	 * @var Control\Factory
-	 */
-	private $control;
-
-	/**
 	 * @var Form\Control\Factory
 	 */
 	private $formControl;
@@ -36,14 +31,12 @@ final class Control
 	public function __construct(
 		Entity $translation,
 		Repository $repository,
-		Control\Factory $control,
 		Form\Control\Factory $formControl,
 		Ytnuk\Orm\Grid\Control\Factory $gridControl
 	) {
 		parent::__construct($translation);
 		$this->translation = $translation;
 		$this->repository = $repository;
-		$this->control = $control;
 		$this->formControl = $formControl;
 		$this->gridControl = $gridControl;
 	}
