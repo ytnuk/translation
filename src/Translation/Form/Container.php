@@ -36,7 +36,52 @@ final class Container
 		$this->model = $repository->getModel();
 	}
 
-	protected function addPropertyTranslates(Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata)
+	public function setValues(
+		$values,
+		$erase = FALSE
+	) : parent
+	{
+		$translates = iterator_to_array($this['translates']->getComponents());
+		array_walk(
+			$translates,
+			function (
+				Ytnuk\Translation\Translate\Form\Container $container,
+				string $locale
+			) use
+			(
+				& $values
+			) {
+				if ( ! $container->values->value) {
+					$this['translates']->removeComponent($container);
+					$container->removeEntity(FALSE);
+					unset($values['translates'][$locale]);
+				}
+			}
+		);
+		$container = parent::setValues(
+			$values,
+			$erase
+		);
+		$parent = $this->lookup(
+			Ytnuk\Orm\Form\Container::class,
+			FALSE
+		);
+		if ( ! (array) $values['translates']) {
+			$this->removeEntity();
+			if ($parent instanceof Ytnuk\Orm\Form\Container) {
+				$parent->removeEntity();
+			}
+		} elseif ($parent instanceof Ytnuk\Orm\Form\Container) {
+			$parent->getEntity()->setValue(
+				$this->getName(),
+				$this->getEntity()
+			);
+		}
+
+		return $container;
+	}
+
+	protected function createComponentTranslates(Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata) : Nette\Forms\Container
 	{
 		$translates = $this->addContainer($metadata->name);
 		$localeRepository = $this->model->getRepositoryForEntity(Ytnuk\Translation\Locale\Entity::class);
@@ -59,15 +104,25 @@ final class Container
 				$translates,
 				$collection
 			) {
-				$translate = $translates->addContainer($locale->id);
-				$value = $translate->addTextArea('value');
-				$value->setOption(
-					'locale',
-					$locale
+				$translate = $collection[$locale->id] ?? new Ytnuk\Translation\Translate\Entity;
+				$translates->addComponent(
+					$component = $this->form->createComponent($translate),
+					$locale->id
 				);
-				$translate = $collection[$locale->id] ?? NULL;
-				if ($translate instanceof Ytnuk\Translation\Translate\Entity) {
-					$value->setDefaultValue($translate->value);
+				if ($component instanceof Nette\Forms\Container) {
+					$component->setCurrentGroup($translates->getCurrentGroup());
+					$value = $component['value'];
+					if ($value instanceof Nette\Forms\Controls\BaseControl) {
+						$value->setRequired(FALSE);
+					}
+					unset($component['locale']);
+					$component->addHidden(
+						'locale',
+						$locale->id
+					)->setOption(
+						'entity',
+						$locale
+					);
 				}
 			}
 		);
@@ -82,7 +137,7 @@ final class Container
 			);
 			$parentProperty = $parent->getMetadata()->getProperty($this->name);
 			$isNullable = $parentProperty->relationship && $parentProperty->relationship->type === Nextras\Orm\Entity\Reflection\PropertyRelationshipMetadata::ONE_HAS_ONE && $parentProperty->isNullable;
-			if ( ! $isNullable) {
+			if ($isNullable) {
 				//TODO: at least one translate needs to be filled
 			}
 		}
