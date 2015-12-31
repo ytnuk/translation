@@ -1,0 +1,13 @@
+<ul class="nav nav-tabs" role="tablist" n:ifcontent n:formContainer="translates">
+	<li class="nav-item" n:foreach="$_form->getComponents() as $key => $translate">
+		<a n:class="nav-link, $iterator->isFirst() ? active" data-toggle="tab" href="#{=$translate[value]->getHtmlId()}-tab" role="tab">
+			{$translate[value]->getOption('locale') ?: $key}
+		</a>
+	</li>
+</ul>
+
+<div class="tab-content" n:ifcontent n:formContainer="translates" n:inner-foreach="$_form->getComponents() as $key => $translate">
+	<div n:class="tab-pane, $iterator->isFirst() ? active" id="{=$translate[value]->getHtmlId()}-tab" role="tabpanel">
+		{=$form->getRenderer()->renderControls($translate)|noescape}
+	</div>
+</div>
