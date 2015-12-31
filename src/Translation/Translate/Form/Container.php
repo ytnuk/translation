@@ -23,4 +23,12 @@ final class Container
 
 		return $component;
 	}
+
+	protected function createComponentValue(Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata) : Nette\Forms\Controls\TextArea
+	{
+		return $this->addTextArea(
+			$metadata->name,
+			$this->formatPropertyLabel($metadata)
+		);
+	}
 }
