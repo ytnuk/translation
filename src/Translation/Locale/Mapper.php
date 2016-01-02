@@ -20,19 +20,13 @@ final class Mapper
 		Nette\Caching\IStorage $cacheStorage,
 		Kdyby\Translation\Translator $translator
 	) {
-		parent::__construct(
-			$connection,
-			$cacheStorage
-		);
+		parent::__construct($connection, $cacheStorage);
 		self::$translator = $translator;
 	}
 
 	public function findAll() : Nextras\Orm\Mapper\Dbal\DbalCollection
 	{
-		return self::sortCollectionByLocales(
-			parent::findAll(),
-			'id'
-		);
+		return self::sortCollectionByLocales(parent::findAll(), 'id');
 	}
 
 	public static function sortCollectionByLocales(
@@ -49,31 +43,18 @@ final class Mapper
 		foreach (
 			$locales as $locale
 		) {
-			$separator = strpos(
-				$locale,
-				'_'
-			);
+			$separator = strpos($locale, '_');
 			$subLocales = $separator === FALSE ? [$locale] : [
 				$locale,
-				substr(
-					$locale,
-					0,
-					$separator
-				),
+				substr($locale, 0, $separator),
 			];
 			foreach (
 				$subLocales as $subLocale
 			) {
-				$builder->addOrderBy(
-					implode(
-						'=',
-						[
-							$column,
-							'%s',
-						]
-					) . ' DESC',
-					$subLocale
-				);
+				$builder->addOrderBy(implode('=', [
+						$column,
+						'%s',
+					]) . ' DESC', $subLocale);
 			}
 		}
 

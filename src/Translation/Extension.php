@@ -33,10 +33,7 @@ final class Extension
 		parent::beforeCompile();
 		$builder = $this->getContainerBuilder();
 		$translator = $builder->getDefinition($builder->getByType(Nette\Localization\ITranslator::class));
-		$translator->setClass(
-			Translator::class,
-			$translator->getFactory()->arguments
-		);
+		$translator->setClass(Translator::class, $translator->getFactory()->arguments);
 	}
 
 	public function loadConfiguration()

@@ -29,10 +29,7 @@ final class Container
 		Nextras\Orm\Entity\IEntity $entity,
 		Nextras\Orm\Repository\IRepository $repository
 	) {
-		parent::__construct(
-			$this->entity = $entity,
-			$repository
-		);
+		parent::__construct($this->entity = $entity, $repository);
 		$this->model = $repository->getModel();
 	}
 
@@ -42,40 +39,28 @@ final class Container
 	) : parent
 	{
 		$translates = iterator_to_array($this['translates']->getComponents());
-		array_walk(
-			$translates,
-			function (
-				Ytnuk\Translation\Translate\Form\Container $container,
-				string $locale
-			) use
-			(
-				& $values
-			) {
-				if ( ! $container->values->value) {
-					$this['translates']->removeComponent($container);
-					$container->removeEntity(FALSE);
-					unset($values['translates'][$locale]);
-				}
+		array_walk($translates, function (
+			Ytnuk\Translation\Translate\Form\Container $container,
+			string $locale
+		) use
+		(
+			& $values
+		) {
+			if ( ! $container->values->value) {
+				$this['translates']->removeComponent($container);
+				$container->removeEntity(FALSE);
+				unset($values['translates'][$locale]);
 			}
-		);
-		$container = parent::setValues(
-			$values,
-			$erase
-		);
-		$parent = $this->lookup(
-			Ytnuk\Orm\Form\Container::class,
-			FALSE
-		);
+		});
+		$container = parent::setValues($values, $erase);
+		$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
 		if ( ! (array) $values['translates']) {
 			$this->removeEntity();
 			if ($parent instanceof Ytnuk\Orm\Form\Container) {
 				$parent->removeEntity();
 			}
 		} elseif ($parent instanceof Ytnuk\Orm\Form\Container) {
-			$parent->getEntity()->setValue(
-				$this->getName(),
-				$this->getEntity()
-			);
+			$parent->getEntity()->setValue($this->getName(), $this->getEntity());
 		}
 
 		return $container;
@@ -85,56 +70,30 @@ final class Container
 	{
 		$translates = $this->addContainer($metadata->name);
 		$localeRepository = $this->model->getRepositoryForEntity(Ytnuk\Translation\Locale\Entity::class);
-		self::$locales ? : self::$locales = $localeRepository->findAll()->fetchPairs(
-			current($localeRepository->getEntityMetadata()->getPrimaryKey())
-		);
-		$collection = array_combine(
-			array_map(
-				function (Ytnuk\Translation\Translate\Entity $entity) {
-					return $entity->getRawValue('locale');
-				},
-				$collection = iterator_to_array($this->entity->getValue($metadata->name))
-			),
+		self::$locales ? : self::$locales = $localeRepository->findAll()->fetchPairs(current($localeRepository->getEntityMetadata()->getPrimaryKey()));
+		$collection = array_combine(array_map(function (Ytnuk\Translation\Translate\Entity $entity) {
+			return $entity->getRawValue('locale');
+		}, $collection = iterator_to_array($this->entity->getValue($metadata->name))), $collection);
+		array_walk(self::$locales, function (Ytnuk\Translation\Locale\Entity $locale) use
+		(
+			$translates,
 			$collection
-		);
-		array_walk(
-			self::$locales,
-			function (Ytnuk\Translation\Locale\Entity $locale) use
-			(
-				$translates,
-				$collection
-			) {
-				$translate = $collection[$locale->id] ?? new Ytnuk\Translation\Translate\Entity;
-				$translates->addComponent(
-					$component = $this->form->createComponent($translate),
-					$locale->id
-				);
-				if ($component instanceof Nette\Forms\Container) {
-					$component->setCurrentGroup($translates->getCurrentGroup());
-					$value = $component['value'];
-					if ($value instanceof Nette\Forms\Controls\BaseControl) {
-						$value->setRequired(FALSE);
-					}
-					unset($component['locale']);
-					$component->addHidden(
-						'locale',
-						$locale->id
-					)->setOption(
-						'entity',
-						$locale
-					);
+		) {
+			$translate = $collection[$locale->id] ?? new Ytnuk\Translation\Translate\Entity;
+			$translates->addComponent($component = $this->form->createComponent($translate), $locale->id);
+			if ($component instanceof Nette\Forms\Container) {
+				$component->setCurrentGroup($translates->getCurrentGroup());
+				$value = $component['value'];
+				if ($value instanceof Nette\Forms\Controls\BaseControl) {
+					$value->setRequired(FALSE);
 				}
+				unset($component['locale']);
+				$component->addHidden('locale', $locale->id)->setOption('entity', $locale);
 			}
-		);
-		$parent = $this->lookup(
-			Ytnuk\Orm\Form\Container::class,
-			FALSE
-		);
+		});
+		$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
 		if ($parent instanceof Ytnuk\Orm\Form\Container) {
-			$translates->getCurrentGroup()->setOption(
-				'label',
-				$parent->formatPropertyLabel($parent->getMetadata()->getProperty($this->getName()))
-			);
+			$translates->getCurrentGroup()->setOption('label', $parent->formatPropertyLabel($parent->getMetadata()->getProperty($this->getName())));
 			$parentProperty = $parent->getMetadata()->getProperty($this->name);
 			$isNullable = $parentProperty->relationship && $parentProperty->relationship->type === Nextras\Orm\Entity\Reflection\PropertyRelationshipMetadata::ONE_HAS_ONE && $parentProperty->isNullable;
 			if ($isNullable) {
@@ -149,19 +108,10 @@ final class Container
 		Nette\Forms\Form $form,
 		string $file = NULL
 	) {
-		return parent::render(
-			$form,
-			$file ? : implode(
-				DIRECTORY_SEPARATOR,
-				[
-					__DIR__,
-					basename(
-						__FILE__,
-						'.php'
-					),
-					'view.latte',
-				]
-			)
-		);
+		return parent::render($form, $file ? : implode(DIRECTORY_SEPARATOR, [
+			__DIR__,
+			basename(__FILE__, '.php'),
+			'view.latte',
+		]));
 	}
 }

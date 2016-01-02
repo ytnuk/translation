@@ -40,12 +40,6 @@ final class Translator
 			return $message;
 		}
 
-		return parent::translate(
-			$message,
-			$count,
-			$parameters,
-			$domain,
-			$locale
-		);
+		return parent::translate($message, $count, $parameters, $domain, $locale);
 	}
 }

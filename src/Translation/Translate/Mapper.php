@@ -10,9 +10,6 @@ final class Mapper
 
 	public function findAll() : Nextras\Orm\Mapper\Dbal\DbalCollection
 	{
-		return Ytnuk\Translation\Locale\Mapper::sortCollectionByLocales(
-			parent::findAll(),
-			'locale_id'
-		);
+		return Ytnuk\Translation\Locale\Mapper::sortCollectionByLocales(parent::findAll(), 'locale_id');
 	}
 }

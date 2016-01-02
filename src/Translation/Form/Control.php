@@ -11,9 +11,6 @@ final class Control
 		Ytnuk\Translation\Entity $translation,
 		Ytnuk\Orm\Form\Factory $form
 	) {
-		parent::__construct(
-			$translation,
-			$form
-		);
+		parent::__construct($translation, $form);
 	}
 }

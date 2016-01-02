@@ -15,10 +15,7 @@ final class Container
 		switch ($metadata->name) {
 			case 'translation':
 			case 'locale':
-				$component->setOption(
-					'unique',
-					TRUE
-				);
+				$component->setOption('unique', TRUE);
 		}
 
 		return $component;
@@ -26,9 +23,6 @@ final class Container
 
 	protected function createComponentValue(Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata) : Nette\Forms\Controls\TextArea
 	{
-		return $this->addTextArea(
-			$metadata->name,
-			$this->formatPropertyLabel($metadata)
-		);
+		return $this->addTextArea($metadata->name, $this->formatPropertyLabel($metadata));
 	}
 }
