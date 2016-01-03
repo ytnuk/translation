@@ -1,11 +1,10 @@
 <ul class="nav nav-tabs" role="tablist" n:ifcontent n:formContainer="translates">
 	<li class="nav-item" n:foreach="$_form->getComponents() as $key => $translate">
+		<small n:class="pull-right, label, $label = $translate->values->value === (string) $entity->getRawValue('value') ? ($entity->isPersisted() ? label-success : NULL) : label-warning" n:if="$entity = $translate->getEntity()">
+			&nbsp;
+		</small>
 		<a n:class="nav-link, $iterator->isFirst() ? active" data-toggle="tab" href="#{=$translate[value]->getHtmlId()}-tab" role="tab">
 			{=$translate[locale]->getOption('entity') ?: $key}
-			{var $entity = $translate->getEntity()}
-			<span n:class="label, $label" n:if="$entity && $label = $translate->values->value === (string) $entity->getRawValue('value') ? ($entity->isPersisted() ? label-success : NULL) : label-warning">
-				<i class="fa fa-floppy-o"></i>
-			</span>
 		</a>
 	</li>
 </ul>

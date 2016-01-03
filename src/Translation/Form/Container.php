@@ -53,14 +53,12 @@ final class Container
 			}
 		});
 		$container = parent::setValues($values, $erase);
-		$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
 		if ( ! (array) $values['translates']) {
 			$this->removeEntity();
+			$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
 			if ($parent instanceof Ytnuk\Orm\Form\Container && $parent->getMetadata()->getProperty($this->getName())->isNullable) {
 				$parent->removeEntity();
 			}
-		} elseif ($parent instanceof Ytnuk\Orm\Form\Container) {
-			$parent->getEntity()->setValue($this->getName(), $this->getEntity());
 		}
 
 		return $container;
@@ -85,6 +83,7 @@ final class Container
 				$component->setCurrentGroup($translates->getCurrentGroup());
 				$value = $component['value'];
 				if ($value instanceof Nette\Forms\Controls\BaseControl) {
+					$value->caption = NULL;
 					$value->setRequired(FALSE);
 				}
 				unset($component['locale']);
