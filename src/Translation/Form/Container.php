@@ -56,9 +56,6 @@ final class Container
 		$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
 		if ( ! (array) $values['translates']) {
 			$this->removeEntity();
-			if ($parent instanceof Ytnuk\Orm\Form\Container) {
-				$parent->removeEntity();
-			}
 		} elseif ($parent instanceof Ytnuk\Orm\Form\Container) {
 			$parent->getEntity()->setValue($this->getName(), $this->getEntity());
 		}
