@@ -48,7 +48,7 @@ final class Container
 		) {
 			if ( ! $container->values->value) {
 				$this['translates']->removeComponent($container);
-				$container->removeEntity(FALSE);
+				$container->removeEntity();
 				unset($values['translates'][$locale]);
 			}
 		});
