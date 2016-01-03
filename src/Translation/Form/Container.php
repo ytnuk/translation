@@ -56,6 +56,9 @@ final class Container
 		$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
 		if ( ! (array) $values['translates']) {
 			$this->removeEntity();
+			if ($parent instanceof Ytnuk\Orm\Form\Container && $parent->getMetadata()->getProperty($this->getName())->isNullable) {
+				$parent->removeEntity();
+			}
 		} elseif ($parent instanceof Ytnuk\Orm\Form\Container) {
 			$parent->getEntity()->setValue($this->getName(), $this->getEntity());
 		}
@@ -91,10 +94,16 @@ final class Container
 		$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
 		if ($parent instanceof Ytnuk\Orm\Form\Container) {
 			$translates->getCurrentGroup()->setOption('label', $parent->formatPropertyLabel($parent->getMetadata()->getProperty($this->getName())));
-			$parentProperty = $parent->getMetadata()->getProperty($this->name);
-			$isNullable = $parentProperty->relationship && $parentProperty->relationship->type === Nextras\Orm\Entity\Reflection\PropertyRelationshipMetadata::ONE_HAS_ONE && $parentProperty->isNullable;
-			if ($isNullable) {
-				//TODO: at least one translate needs to be filled
+			if ( ! $parent->getMetadata()->getProperty($this->name)->isNullable && $containers = iterator_to_array($translates->getComponents(FALSE, Nette\Forms\Container::class))) {
+				foreach ($containers as $key => $container) {
+					$value = $container['value'] ?? NULL;
+					if ($value instanceof Nette\Forms\Controls\BaseControl) {
+						foreach (array_diff_key($containers, array_flip([$key])) as $sibling) {
+							$value = $value->addConditionOn($sibling['value'], ~Nette\Forms\Form::FILLED);
+						}
+						$value->setRequired();
+					}
+				}
 			}
 		}
 
