@@ -53,12 +53,14 @@ final class Container
 			}
 		});
 		$container = parent::setValues($values, $erase);
+		$parent = $this->lookup(parent::class, FALSE);
 		if ( ! (array) $values['translates']) {
 			$this->removeEntity();
-			$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
-			if ($parent instanceof Ytnuk\Orm\Form\Container && $parent->getMetadata()->getProperty($this->getName())->isNullable) {
+			if ($parent instanceof parent && $parent->getMetadata()->getProperty($this->getName())->isNullable) {
 				$parent->removeEntity();
 			}
+		} elseif ($parent instanceof parent) {
+			$parent->getEntity()->setValue($this->getName(), $this->getEntity()); //TODO: not sure why this is needed
 		}
 
 		return $container;
@@ -90,8 +92,8 @@ final class Container
 				$component->addHidden('locale', $locale->id)->setOption('entity', $locale);
 			}
 		});
-		$parent = $this->lookup(Ytnuk\Orm\Form\Container::class, FALSE);
-		if ($parent instanceof Ytnuk\Orm\Form\Container) {
+		$parent = $this->lookup(parent::class, FALSE);
+		if ($parent instanceof parent) {
 			$translates->getCurrentGroup()->setOption('label', $parent->formatPropertyLabel($parent->getMetadata()->getProperty($this->getName())));
 			if ( ! $parent->getMetadata()->getProperty($this->name)->isNullable && $containers = iterator_to_array($translates->getComponents(FALSE, Nette\Forms\Container::class))) {
 				foreach ($containers as $key => $container) {
