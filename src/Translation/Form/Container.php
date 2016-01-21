@@ -110,15 +110,4 @@ final class Container
 
 		return $translates;
 	}
-
-	public function render(
-		Nette\Forms\Form $form,
-		string $file = NULL
-	) {
-		return parent::render($form, $file ? : implode(DIRECTORY_SEPARATOR, [
-			__DIR__,
-			basename(__FILE__, '.php'),
-			'view.latte',
-		]));
-	}
 }
