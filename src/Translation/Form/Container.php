@@ -54,13 +54,11 @@ final class Container
 		});
 		$container = parent::setValues($values, $erase);
 		$parent = $this->lookup(parent::class, FALSE);
-		if ( ! (array) $values['translates']) {
+		if ($parent instanceof parent && ! (array) $values['translates']) {
 			$this->removeEntity();
-			if ($parent instanceof parent && $parent->getMetadata()->getProperty($this->getName())->isNullable) {
+			if ($parent->getMetadata()->getProperty($this->getName())->isNullable) {
 				$parent->removeEntity();
 			}
-		} elseif ($parent instanceof parent) {
-			$parent->getEntity()->setValue($this->getName(), $this->getEntity()); //TODO: not sure why this is needed
 		}
 
 		return $container;

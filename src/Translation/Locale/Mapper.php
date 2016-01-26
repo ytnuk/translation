@@ -17,10 +17,10 @@ final class Mapper
 
 	public function __construct(
 		Nextras\Dbal\Connection $connection,
-		Nette\Caching\IStorage $cacheStorage,
+		Nette\Caching\Cache $cache,
 		Kdyby\Translation\Translator $translator
 	) {
-		parent::__construct($connection, $cacheStorage);
+		parent::__construct($connection, $cache);
 		$this->translator = $translator;
 	}
 

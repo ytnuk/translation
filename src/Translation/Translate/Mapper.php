@@ -16,10 +16,10 @@ final class Mapper
 
 	public function __construct(
 		Nextras\Dbal\Connection $connection,
-		Nette\Caching\IStorage $cacheStorage,
+		Nette\Caching\Cache $cache,
 		Ytnuk\Translation\Locale\Mapper $localeMapper
 	) {
-		parent::__construct($connection, $cacheStorage);
+		parent::__construct($connection, $cache);
 		$this->localeMapper = $localeMapper;
 	}
 
